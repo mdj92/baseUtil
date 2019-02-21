@@ -17,8 +17,8 @@ public class App extends MApp {
 
     @Override
     protected void init() {
-//        BaseModule.initialize(BaseModuleConfig.newBuilder()
-//                .setLoadingViewColor(R.color.color_DA0101).build());
+        BaseModule.initialize(BaseModuleConfig.newBuilder()
+                .setLoadingViewColor(R.color.color_DA0101).build());
 
     }
 

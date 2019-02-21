@@ -16,7 +16,7 @@ public class Result <T>{
     public T date;
 
     public boolean isSuccess() {
-        return code == BaseModule.getMbaseModuleConfig().getServerSuccessCode();
+        return code==200 || code==0;
     }
 
 

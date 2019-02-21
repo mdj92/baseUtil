@@ -1,8 +1,13 @@
 package com.dj.basemoudle.config;
 
 import android.os.Build;
+import android.support.annotation.ColorRes;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
+
+import okhttp3.Interceptor;
 
 /**
  * @author dj
@@ -57,6 +62,8 @@ public class BaseModuleConfig {
     private int dialogColor;
 
 
+
+
     public static Builder newBuilder(){
         return new Builder();
     }
@@ -67,6 +74,8 @@ public class BaseModuleConfig {
         this.mConnectTimeout = builder.mConnectTimeout;
         this.mReadTimeout = builder.mReadTimeout;
         this.serverSuccessCode=builder.serverSuccessCode;
+        this.dialogColor=builder.dialogColor;
+        this.dialogStyle=builder.dialogStyle;
     }
 
 
@@ -156,63 +165,86 @@ public class BaseModuleConfig {
         private int serverSuccessCode=200;
 
 
-
-        public int getServerSuccessCode() {
-            return serverSuccessCode;
-        }
-
-        public Map<String, String> getHeaders() {
-            return headers;
-        }
-
-        public void setHeaders(Map<String, String> headers) {
-            this.headers = headers;
-        }
-
-        public Map<String, String> getParams() {
-            return params;
-        }
-
-        public void setParams(Map<String, String> params) {
-            this.params = params;
-        }
-
-        public int getmConnectTimeout() {
-            return mConnectTimeout;
-        }
-
-        public void setmConnectTimeout(int mConnectTimeout) {
-            this.mConnectTimeout = mConnectTimeout;
-        }
-
-        public int getmReadTimeout() {
-            return mReadTimeout;
-        }
-
-        public void setmReadTimeout(int mReadTimeout) {
-            this.mReadTimeout = mReadTimeout;
-        }
-
-        public int getmWriteTimeout() {
-            return mWriteTimeout;
-        }
-
-        public void setmWriteTimeout(int mWriteTimeout) {
-            this.mWriteTimeout = mWriteTimeout;
+        /**
+         * 设置LoadingView样式
+         *
+         * @param dialogStyle
+         */
+        public Builder setLoadingViewStyle(String dialogStyle) {
+            this.dialogStyle = dialogStyle;
+            return this;
         }
 
 
-        public String getDialogStyle() {
-            return dialogStyle;
+        public Builder setLoadingViewColor(@ColorRes int color) {
+            this.dialogColor = color;
+            return this;
         }
 
-        public int getDialogColor() {
-            return dialogColor;
+        public Builder addParams(String key, String value) {
+            if (params == null) {
+                params = new Hashtable<>();
+            }
+            params.put(key, value);
+            return this;
         }
+
+        public Builder addHeaders(String key, String value) {
+            if (headers == null) {
+                headers = new Hashtable<>();
+            }
+            headers.put(key, value);
+            return this;
+        }
+
+
+
+        public Builder setServerSuccessCode(int serverSuccessCode) {
+            this.serverSuccessCode = serverSuccessCode;
+            return this;
+        }
+
+
+
+        public Builder setConnectTimeout(int connectTimeout) {
+            mConnectTimeout = connectTimeout;
+            return this;
+        }
+
+        public Builder setReadTimeout(int readTimeout) {
+            mReadTimeout = readTimeout;
+            return this;
+        }
+
+
 
         public BaseModuleConfig build() {
             return new BaseModuleConfig(this);
         }
+
+
+//        public Builder setNeedGetResult(boolean needGetResult) {
+//            this.needGetResult = needGetResult;
+//            return this;
+//        }
+//
+//        /**
+//         * 添加拦截器
+//         *
+//         * @return
+//         */
+//        public Builder addInterceptor(Interceptor interceptor) {
+//            if (interceptors == null) {
+//                interceptors = new ArrayList<>();
+//            }
+//            interceptors.add(interceptor);
+//            return this;
+//        }
+//        public Builder setNeedPrintLog(boolean needPrintLog) {
+//            this.needPrintLog = needPrintLog;
+//            return this;
+//        }
+
 
     }
 }
