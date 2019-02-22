@@ -1,8 +1,7 @@
 package com.dj.basemoudle.base;
 
-import android.util.Log;
-
 import com.dj.basemoudle.R;
+import com.dj.basemoudle.base.MBase.MApp;
 import com.dj.basemoudle.config.BaseModule;
 import com.dj.basemoudle.config.BaseModuleConfig;
 

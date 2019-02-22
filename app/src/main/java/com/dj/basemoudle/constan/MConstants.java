@@ -1,4 +1,4 @@
-package com.dj.basemoudle.util;
+package com.dj.basemoudle.constan;
 
 /**
  * @author dj

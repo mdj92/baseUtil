@@ -2,6 +2,8 @@ package com.dj.basemoudle.base;
 
 import android.content.pm.ActivityInfo;
 
+import com.dj.basemoudle.base.MBase.MBaseActivity;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 

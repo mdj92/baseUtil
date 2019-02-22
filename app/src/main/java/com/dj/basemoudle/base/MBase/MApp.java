@@ -1,4 +1,4 @@
-package com.dj.basemoudle.base;
+package com.dj.basemoudle.base.MBase;
 
 import android.support.multidex.MultiDexApplication;
 
@@ -10,12 +10,10 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 /**

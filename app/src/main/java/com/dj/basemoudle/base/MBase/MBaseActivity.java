@@ -1,4 +1,4 @@
-package com.dj.basemoudle.base;
+package com.dj.basemoudle.base.MBase;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

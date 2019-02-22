@@ -3,6 +3,7 @@ package com.dj.basemoudle.base;
 import android.view.View;
 
 
+import com.dj.basemoudle.base.MBase.MBaseFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

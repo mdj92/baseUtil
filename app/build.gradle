@@ -1,31 +1,42 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'djbasemoudle'
+            keyPassword 'krt123456'
+            storeFile file('F:/AndroidWork2/BaseMoudle/app/KRT_ZHLY_GZ_key')
+            storePassword 'krt123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.dj.basemoudle"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.greenrobot:eventbus:3.1.1'
     //工具类
@@ -35,12 +46,21 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //okgo
     implementation 'com.lzy.net:okgo:3.0.4'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    //    implementation 'com.google.code.gson:gson:2.8.5'
     //jsoncovertor
     implementation 'com.readystatesoftware.chuck:library:1.0.4'
     //AVLoadingIndicatorView
     implementation 'com.wang.avi:library:2.1.3'
     //文字跳动
     implementation 'net.frakbot:jumpingbeans:1.3.0'
+    //状态栏
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+    //状态栏
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+    //rxpermissions
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    //RxJava2
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
 
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 }

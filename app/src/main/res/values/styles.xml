@@ -15,4 +15,8 @@
         <item name="maxHeight">40dip</item>
     </style>
 
+    <style name="MProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress</item>
+    </style>
+
 </resources>

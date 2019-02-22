@@ -1,4 +1,4 @@
-package com.dj.basemoudle.base;
+package com.dj.basemoudle.base.MBase;
 
 import android.content.Context;
 import android.os.Bundle;
