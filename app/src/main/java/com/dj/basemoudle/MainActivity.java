@@ -1,15 +1,16 @@
 package com.dj.basemoudle;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.dj.basemoudle.base.BaseActivity;
 import com.dj.basemoudle.constan.Constants;
-import com.dj.basemoudle.http.MCallBack;
-import com.dj.basemoudle.http.Result;
-import com.dj.basemoudle.util.MToast;
-import com.dj.basemoudle.util.MUpdate;
+import com.dj.baseutil.http.MCallBack;
+import com.dj.baseutil.http.Result;
+import com.dj.baseutil.util.MToast;
+import com.dj.baseutil.util.MUpdate;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
@@ -28,12 +29,17 @@ public class MainActivity extends BaseActivity {
     @Override
     public int bindLayout() {
         return R.layout.activity_main;
-
     }
 
     @Override
     public void initView() {
-
+//        login=findViewById(R.id.login);
+//        login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                doLogin("ls", "123456");
+//            }
+//        });
     }
 
     @Override
@@ -41,22 +47,21 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.login,R.id.update})
+    @OnClick({R.id.login, R.id.update})
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login:
-                doLogin("zs", "123456");
+                doLogin("ls", "123456");
                 break;
             case R.id.update:
                 doUpdate();
                 break;
             default:
-
         }
-
     }
 
-    private void doUpdate(){
+
+    private void doUpdate() {
         MUpdate.newBuilder(this)
                 .setUrl(Constants.APP_Upload)
                 .setForceUpdate(true)

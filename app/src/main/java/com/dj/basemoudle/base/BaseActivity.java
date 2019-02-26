@@ -1,11 +1,18 @@
 package com.dj.basemoudle.base;
 
-import android.content.pm.ActivityInfo;
 
-import com.dj.basemoudle.base.MBase.MBaseActivity;
+
+
+import com.dj.baseutil.base.MBaseActivity;
+import com.dj.baseutil.bean.MEventBean;
+
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 
 /**
  * @author dj
@@ -15,10 +22,14 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends MBaseActivity {
     private Unbinder mUnbinder;
 
+    @Override
+    public void init() {
+
+    }
 
     @Override
     public void bindButterKnife() {
-        mUnbinder = ButterKnife.bind(this);
+      mUnbinder=  ButterKnife.bind(this);
     }
 
     @Override
@@ -26,12 +37,12 @@ public abstract class BaseActivity extends MBaseActivity {
         mUnbinder.unbind();
     }
 
-    @Override
-    public void init() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void baseEvent(MEventBean bean) {
+
     }
-
-
 
 
 }
