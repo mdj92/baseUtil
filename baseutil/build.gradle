@@ -3,17 +3,12 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
-
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -38,12 +33,8 @@ ext.supportLibVersion = '27.1.1'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-//    implementation 'com.android.support:appcompat-v7:28.0.0'
-//    api "com.android.support:design:28.0.0"
     api "com.android.support:appcompat-v7:${supportLibVersion}"
     api "com.android.support:design:${supportLibVersion}"
-
 
     api 'com.android.support:multidex:1.0.3'
     api 'org.greenrobot:eventbus:3.1.1'
@@ -71,11 +62,13 @@ dependencies {
     api 'com.daimajia.androidanimations:library:2.3@aar'
 }
 
+//执行命令：gradlew clean build bintrayUpload -PbintrayUser=mdj92 -PbintrayKey=2a32a7667e8806d4e20c5d92842fab0c7612d413 -PdryRun=false
+
 publish {
     userOrg = 'mdj92'      //bintray注册的用户名
-    groupId = 'com.mdj92'         //compile引用时的第1部分groupId
-    artifactId = 'mbaseutil'     //compile引用时的第2部分项目名
-    publishVersion = '1.0.0'    //compile引用时的第3部分版本号
-    desc = 'This is a okhttp3 extend library'
-    website = 'https://github.com/mdj92/baseutil'
+    groupId = 'com.mdj92'         //jcenter上的路径 -compile引用时的第1部分groupId
+    artifactId = 'baseModule'     //自己的maven上添加的包名-compile引用时的第2部分项目名
+    publishVersion = '1.0.1'    //compile引用时的第3部分版本号
+    desc = 'desc'
+    website = 'https://github.com/mdj92/baseUtil'
 }
