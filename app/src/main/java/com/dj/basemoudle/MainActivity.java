@@ -9,10 +9,14 @@ import com.dj.basemoudle.base.BaseActivity;
 import com.dj.basemoudle.constan.Constants;
 import com.dj.baseutil.http.MCallBack;
 import com.dj.baseutil.http.Result;
+import com.dj.baseutil.upload.UploadCallBack;
 import com.dj.baseutil.util.MToast;
 import com.dj.baseutil.util.MUpdate;
+import com.dj.baseutil.util.MUpload;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +70,22 @@ public class MainActivity extends BaseActivity {
                 .setUrl(Constants.APP_Upload)
                 .setForceUpdate(true)
                 .build();
+
+//        MUpload.<Result<String>>newBuilder(this)
+//                .addHeader("accessToken", spUtil.getAccessToken())
+//                .addFile("file", Arrays.asList(path))
+//                .addParam("dir", "all")
+//                .setUrl(Constants.BASE_URL + "upload/fileUpload")
+//                //是否压缩
+//                .setNeedCompress(true)
+//                .execute(new UploadCallBack<Result<String>>() {
+//                    @Override
+//                    public void onSuccess(Result<String> data) {
+//                        if (data.isSuccess()) {
+//                            finishUpload(data.data);
+//                        }
+//                    }
+//                });
     }
 
     private void doLogin(final String username, final String password) {

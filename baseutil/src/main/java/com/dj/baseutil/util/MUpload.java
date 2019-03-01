@@ -69,6 +69,10 @@ public class MUpload<T> implements IUpload {
     private boolean showDialog;
 
 
+    public static <E> Builder<E> newBuilder(Context context){
+        return new Builder<>(context);
+    }
+
     private MUpload(Builder<T> builder){
         this.mContext = builder.mContext;
         this.url = builder.url;
@@ -117,7 +121,7 @@ public class MUpload<T> implements IUpload {
                             if (files != null && !files.isEmpty()) {
                                 doUpload(files);
                             } else {
-                               MToast.showToast(mContext,R.string.error_compress);
+                               MToast.showToast(mContext,mContext.getResources().getString(R.string.error_compress));
                             }
                         }
                     });
