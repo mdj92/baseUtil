@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'djbasemoudle'
             keyPassword 'krt123456'
-            storeFile file('F:/AndroidWork2/BaseMoudle/app/KRT_ZHLY_GZ_key')
+            storeFile file('KRT_ZHLY_GZ_key')
             storePassword 'krt123456'
         }
     }
