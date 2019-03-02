@@ -1,10 +1,20 @@
 package com.dj.baseutil.util;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.dj.baseutil.BuildConfig;
+import com.dj.baseutil.R;
+import com.dj.baseutil.bean.UpdateInfo;
 import com.dj.baseutil.download.DownLoadCallBack;
 import com.dj.baseutil.view.CircleProgerssDialog;
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -38,12 +48,19 @@ public class MDownLoad {
 
     private DownLoadCallBack downLoadListener;
 
+    private String filePath;
+
+    private String fileName;
+
+    private TextView textView;
+
 
     private MDownLoad(MDownLoad.Builder builder){
         this.mContext = builder.mContext;
         this.url = builder.url;
         this.downLoadListener = builder.mCallBack;
         this.showDialog = builder.showDialog;
+        this.fileName=builder.fileName;
         dialog = new CircleProgerssDialog(mContext);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -57,56 +74,111 @@ public class MDownLoad {
         }else {
             path = Environment.getDataDirectory().getPath() + File.separator + AppUtils.getAppName();
         }
-        start();
+
+        File filepath=new File(path);
+        if (filepath.exists()){
+            filepath.mkdirs();
+        }
+        checkPermission();
     }
 
     private void start(){
-        OkGo.<File>get(url)
-                .tag(this)
-                .execute(new FileCallback() {
-                    @Override
-                    public void onSuccess(Response<File> response) {
-                        if (downLoadListener != null){
-                            downLoadListener.onSuccess(response.body());
-                        }
-                    }
+        final File file=new File(path,fileName);
+        File file1= new File(file.getAbsolutePath());
+        if (file1.exists()){
+            //判断文件是否存在
+            openFiles(file);
+        }else {
+            OkGo.<File>get(url)
+                    .tag(this)
+                    .execute(new FileCallback(path,fileName) {
+                        @Override
+                        public void onSuccess(Response<File> response) {
+                            if (downLoadListener != null){
+                                downLoadListener.onSuccess(response.body());
+                            }
+                            File file2=response.body();
+                            if ((new File(file.getAbsolutePath())).exists()){
+                                openFiles(response.body());
+                            }
 
-                    @Override
-                    public void onStart(Request<File, ? extends Request> request) {
-                        super.onStart(request);
-                        if (showDialog) {
-                            dialog.show();
-                            mProgress = dialog.getdProgress();
-                            mProgress.setMax(100);
                         }
-                    }
 
-                    @Override
-                    public void onError(Response<File> response) {
-                        super.onError(response);
-                        if (dialog != null && dialog.isShowing()) {
-                            dialog.dismiss();
+                        @Override
+                        public void onStart(Request<File, ? extends Request> request) {
+                            super.onStart(request);
+                            if (showDialog) {
+                                dialog.show();
+                                textView=dialog.getText();
+                                textView.setText("正在下载中...");
+                                mProgress = dialog.getdProgress();
+                                mProgress.setMax(100);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void downloadProgress(Progress progress) {
-                        super.downloadProgress(progress);
-                        if ((int) (progress.fraction * 100) == 100) {
+                        @Override
+                        public void onError(Response<File> response) {
+                            super.onError(response);
                             if (dialog != null && dialog.isShowing()) {
                                 dialog.dismiss();
                             }
-                        } else {
-                            if (dialog != null && dialog.isShowing()) {
-                                mProgress.setProgress((int) (progress.fraction * 100));
+                        }
+
+                        @Override
+                        public void downloadProgress(Progress progress) {
+                            super.downloadProgress(progress);
+                            if ((int) (progress.fraction * 100) == 100) {
+                                if (dialog != null && dialog.isShowing()) {
+                                    dialog.dismiss();
+                                }
+                            } else {
+                                if (dialog != null && dialog.isShowing()) {
+                                    mProgress.setProgress((int) (progress.fraction * 100));
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
     }
 
 
+    private void openFiles(File file){
+        //Intent.ACTION_VIEW
+        Intent intent = new Intent("android.intent.action.VIEW");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", file);
+            intent.setDataAndType(contentUri, "application/vnd.ms-powerpoint");
+        } else {
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.ms-powerpoint");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        if (mContext.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+            mContext.startActivity(intent);
+        }
+    }
 
+    /**
+     * 权限验证
+     *
+     */
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            MPermissions.getInstance().request((Activity) mContext, permissions, new MPermissions.PermissionListener() {
+                @Override
+                public void callBack(boolean value) {
+                    if (value) {
+                        start();
+                    } else {
+                        MToast.showToast(mContext, "您没有授权该权限，请在设置中打开授权!");
+                    }
+                }
+            });
+        } else {
+            start();
+        }
+    }
 
     public static final class Builder {
         /**
@@ -122,11 +194,20 @@ public class MDownLoad {
          */
         private boolean showDialog;
 
+        private String fileName;
+
         private DownLoadCallBack mCallBack;
 
         public Builder(Context context) {
             mContext = context;
         }
+
+
+        public Builder setFileName(String fileName){
+            this.fileName = fileName;
+            return this;
+        }
+
 
         public Builder setUrl(String url){
             this.url = url;

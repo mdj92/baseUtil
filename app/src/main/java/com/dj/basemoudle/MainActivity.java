@@ -7,15 +7,18 @@ import android.widget.Button;
 
 import com.dj.basemoudle.base.BaseActivity;
 import com.dj.basemoudle.constan.Constants;
+import com.dj.baseutil.download.DownLoadCallBack;
 import com.dj.baseutil.http.MCallBack;
 import com.dj.baseutil.http.Result;
 import com.dj.baseutil.upload.UploadCallBack;
+import com.dj.baseutil.util.MDownLoad;
 import com.dj.baseutil.util.MToast;
 import com.dj.baseutil.util.MUpdate;
 import com.dj.baseutil.util.MUpload;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
+import java.io.File;
 import java.util.Arrays;
 
 import butterknife.BindView;
@@ -58,10 +61,25 @@ public class MainActivity extends BaseActivity {
                 doLogin("ls", "123456");
                 break;
             case R.id.update:
-                doUpdate();
+//                doUpdate();
+                doDownloadFile();
                 break;
             default:
         }
+    }
+
+    private void doDownloadFile(){
+       new MDownLoad.Builder(this)
+               .setUrl("http://223.84.197.214:80/group1/M00/00/02/rAA0RFrcLiuAOQUdAAAvp7JQ9Ow63.xlsx")
+               .setFileName("rAA0RFrcLiuAOQUdAAAvp7JQ9Ow63.xlsx")
+               .setShowDialog(true)
+               .execute(new DownLoadCallBack() {
+                   @Override
+                   public void onSuccess(File file) {
+                       String f=file.getPath();
+                   }
+               });
+
     }
 
 

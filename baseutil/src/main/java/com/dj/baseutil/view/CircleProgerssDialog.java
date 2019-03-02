@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.dj.baseutil.R;
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -17,6 +18,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 public class CircleProgerssDialog extends Dialog {
 
     private DonutProgress dProgress;
+    private TextView textView;
 
     public CircleProgerssDialog(@NonNull Context context) {
         super(context);
@@ -29,8 +31,15 @@ public class CircleProgerssDialog extends Dialog {
         setContentView(R.layout.layout_progressdialog);
         setCanceledOnTouchOutside(false);
         dProgress=findViewById(R.id.donutprogress);
+        textView=findViewById(R.id.info);
 
     }
+
+    public TextView getText(){
+       return textView ;
+    }
+
+
 
     public DonutProgress getdProgress(){
         return dProgress;
